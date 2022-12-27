@@ -1,6 +1,8 @@
 import React from 'react';
-import {Image, ImageBackground, Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, ImageBackground, Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import * as D from './src/data';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import {MD2Colors} from 'react-native-paper';
 
 // chapter 3
 // const person = D.makeArray(100).map(D.createRandomPerson)
@@ -80,6 +82,7 @@ import * as D from './src/data';
 
 // chapter 4 - font, image
 const text = 'Almost before we knew it, we had left the ground'
+const onIconPressed = () => Alert.alert('icon pressed')
 export default function App() {
     return<SafeAreaView style={styles.flex}>
         <ImageBackground
@@ -92,6 +95,7 @@ export default function App() {
                 <Text style={[styles.text, styles.semiBold]}>{text} [semiBold]</Text>
                 <Text style={[styles.text, styles.bold]}>{text} [bold]</Text>
             </View>
+            <Icon name="home" size={50} color={MD2Colors.blue900} onPress={onIconPressed}/>
         </ImageBackground>
     </SafeAreaView>
 }
