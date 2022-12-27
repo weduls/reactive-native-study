@@ -1,10 +1,12 @@
 import React, {Fragment} from 'react';
-import {Alert, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Alert, FlatList, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
 import {MD2Colors} from 'react-native-paper';
 import TopBar from './src/screens/TopBar';
 import Content from './src/screens/Content';
 import BottomBar from './src/screens/Bottom';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as D from './src/data';
+import Person from './src/copy/Person';
 
 // chapter 3
 // const person = D.makeArray(100).map(D.createRandomPerson)
@@ -123,30 +125,49 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // chapter 5. style guide
 // 기본 top, content, bottom, scrollView까지 포함된 것
-const onPressed = () => Alert.alert('Icon Pressed')
+// const onPressed = () => Alert.alert('Icon Pressed')
+// export default function App() {
+//     return (
+//         <>
+//             <SafeAreaView style={[styles.flex]}>
+//                 <TopBar/>
+//                 <Content/>
+//                 <BottomBar/>
+//             </SafeAreaView>
+//             <View style={[styles.absoluteView]}>
+//                 <Icon name="feather" size={50} color="white" onPress={onPressed}/>
+//             </View>
+//         </>
+//     );
+// }
+//
+// const styles = StyleSheet.create({
+//     flex: {flex: 1, backgroundColor: MD2Colors.lightBlue100},
+//     absoluteView: {
+//         backgroundColor: MD2Colors.purple900,
+//         position: 'absolute',
+//         right: 30,
+//         bottom: Platform.select({ios: 100, android: 80}),
+//         padding: 10,
+//         borderRadius: 35
+//     },
+// });
+
+// chapter 6. component style
+const people: D.IPerson[] = D.makeArray(10).map(D.createRandomPerson);
 export default function App() {
     return (
-        <>
-            <SafeAreaView style={[styles.flex]}>
-                <TopBar/>
-                <Content/>
-                <BottomBar/>
-            </SafeAreaView>
-            <View style={[styles.absoluteView]}>
-                <Icon name="feather" size={50} color="white" onPress={onPressed}/>
-            </View>
-        </>
+        <SafeAreaView style={styles.flex}>
+            <FlatList data={people} renderItem={({item}) => <Person person={item} />}
+                      keyExtractor={(item, index) => item.id}
+                      ItemSeparatorComponent={() => <View style={styles.itemSeparator}/>} />
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    flex: {flex: 1, backgroundColor: MD2Colors.lightBlue100},
-    absoluteView: {
-        backgroundColor: MD2Colors.purple900,
-        position: 'absolute',
-        right: 30,
-        bottom: Platform.select({ios: 100, android: 80}),
-        padding: 10,
-        borderRadius: 35
+    flex: {flex: 1},
+    itemSeparator: {
+        borderWidth: 1, borderColor: MD2Colors.grey500,
     },
 });
